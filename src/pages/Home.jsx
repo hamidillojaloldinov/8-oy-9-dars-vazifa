@@ -5,11 +5,19 @@ import { Link } from "react-router-dom";
 
 function Home() {
   const { user } = useSelector((state) => state.user);
-  const { data } = useCollection("Recipes", ["uid", "==", user.uid]);
-  console.log(data);
+  const { data } = useCollection(
+    "Recipes",
+    ["uid", "==", user.uid],
+    ["createdAT"]
+  );
   return (
-    <div className="w-full bg-cover bg-center h-screen pt-5 bg-[url('./hot-dog.jpg')] dark:bg-[url('./pngtree.jpg')]">
-      <div>
+    <div>
+      <img
+        className="w-full bg-cover bg-center h-screen z-[-1] absolute"
+        src="/hot-dog.jpg"
+        alt=""
+      />
+      <div className="pt-5">
         {data ? (
           <div className="flex justify-center">
             <div>
@@ -18,17 +26,8 @@ function Home() {
             </div>
           </div>
         ) : (
-          <div className="grid lg:grid-cols-3 md:mb-20 mb-0 md:grid-cols-2 sm:grid-cols-1 gap-5 mx-auto text-white">
-            <Link
-              to="/add_New_Resipet"
-              className="card rounded-md glass sm:w-96 w-80 place-content-center grid justify-center"
-            >
-              <div className="">
-                <h1 className="text-9xl text-center p-10 bg-slate-800 border rounded-full w-full h-full flex place-content-center justify-center">
-                  +
-                </h1>
-              </div>
-            </Link>
+          <div className="w-full mx-[700px]">
+            <span className="loading loading-ring text-white w-20 my-60"></span>
           </div>
         )}
       </div>

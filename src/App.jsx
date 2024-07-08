@@ -26,17 +26,6 @@ import { useEffect } from "react";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 
-// function a() {
-//   let seconds = 0;
-//   function incrementSeconds() {
-//     seconds += 1;
-//   }
-//   let cancel = setInterval(incrementSeconds, 1000);
-//   if (cancel == 2) {
-//     console.log(cancel);
-//   }
-// }
-
 function App() {
   const dispatch = useDispatch();
   const { user, isAuthState } = useSelector((state) => state.user);

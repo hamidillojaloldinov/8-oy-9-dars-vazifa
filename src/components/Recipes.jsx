@@ -1,26 +1,17 @@
 import { IoMdStopwatch } from "react-icons/io";
 import { Link } from "react-router-dom";
-
-import toast from "react-hot-toast";
+import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
-import { doc, deleteDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
+
 function Recipes({ data }) {
-  const deleteRecipe = (id) => {
-    deleteDoc(doc(db, "Recipes", id))
-      .then(() => {
-        toast.success("Deleted");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  };
   return (
     <div className="grid lg:grid-cols-3 md:mb-20 mb-0 md:grid-cols-2 sm:grid-cols-1 gap-5 mx-auto text-white">
       {data &&
         data.map((resipe) => {
           return (
             <div className="relative" key={resipe.id}>
-              <div className="card-actions justify-end absolute z-[1] left-[330px]">
+              <div className="card-actions justify-end absolute z-[1] sm:left-[330px] left-[265px]">
                 <button
                   className="btn btn-square btn-sm m-2"
                   onClick={() =>
@@ -35,8 +26,16 @@ function Recipes({ data }) {
                       <div className="modal-action">
                         <form method="dialog">
                           <button
-                            className="btn"
-                            onClick={() => deleteRecipe(resipe.id)}
+                            className="btn mr-5"
+                            onClick={() => {
+                              deleteDoc(doc(db, "Recipes", resipe.id))
+                                .then(() => {
+                                  toast.success("Deleted");
+                                })
+                                .catch((error) => {
+                                  toast.error(error.message);
+                                });
+                            }}
                           >
                             delete
                           </button>
@@ -79,7 +78,7 @@ function Recipes({ data }) {
                   </div>
                 </div>
                 <figure>
-                  <img src={resipe.images} alt={resipe.title} />
+                  <img src={resipe.images[0]} alt={resipe.title} />
                 </figure>
               </Link>
             </div>
@@ -87,12 +86,10 @@ function Recipes({ data }) {
         })}
       <Link
         to="/add_New_Resipet"
-        className="card h-[460px] rounded-md glass sm:w-96 w-80 place-content-center grid justify-center"
+        className="card h-[460px] rounded-2xl glass sm:w-96 w-80 place-content-center grid justify-center"
       >
-        <h1 className="bg-slate-800 border rounded-full p-10 text-9xl">
-          <div className="pb-2">
-            +
-          </div>
+        <h1 className="bg-slate-800 border rounded-full p-8  text-6xl">
+          <div className="pb-2 px-3">+</div>
         </h1>
       </Link>
     </div>
