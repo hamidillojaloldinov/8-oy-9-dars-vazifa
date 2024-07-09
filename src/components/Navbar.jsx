@@ -37,7 +37,7 @@ function Navbar() {
           </Link>
         </div>
       </div>
-      <div className="mr-40">
+      <div className="navbar-center">
         <Weather />
       </div>
       <div className="flex-none">
