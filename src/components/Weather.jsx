@@ -43,7 +43,9 @@ function Weather() {
 
     location();
   }, []);
-
+  let iconcode = weather?.weather[0].icon;
+  let iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+  
   return (
     <div className="sm:flex hidden">
       <div>
@@ -55,6 +57,7 @@ function Weather() {
             <div>
               {weather.main?.temp}°C <br />
             </div>
+            <img src={iconurl} alt="" />
           </div>
         ) : (
           <div id="weather">Yuklanmoqda...</div>

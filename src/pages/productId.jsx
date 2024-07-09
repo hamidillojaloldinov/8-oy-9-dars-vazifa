@@ -6,7 +6,7 @@ import { addProduct } from "../app/userslice";
 
 function ProductId() {
   const params = useParams();
-  const { user, product } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const { data } = useCollection("Recipes", ["uid", "==", user.uid]);
   const data2 = data?.filter((id) => id.id == params.id)[0];
   console.log(data2);

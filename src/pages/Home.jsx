@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import { useCollection } from "../hooks/useCollection";
 import Recipes from "../components/Recipes";
-import { Link } from "react-router-dom";
 
 function Home() {
   const { user } = useSelector((state) => state.user);
@@ -13,7 +12,9 @@ function Home() {
   return (
     <div>
       <img
-        className="w-full bg-cover bg-center h-screen z-[-1] absolute"
+        className={`w-full bg-cover bg-center ${
+          data && data.length >= 3 ? "h-full" : "h-[650px]"
+        } z-[-1] absolute`}
         src="/hot-dog.jpg"
         alt=""
       />

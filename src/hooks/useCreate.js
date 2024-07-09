@@ -1,5 +1,5 @@
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useActionData } from "react-router-dom";
 import { db } from "../firebase/firebaseConfig";
@@ -7,9 +7,13 @@ import toast from "react-hot-toast";
 
 function useCreate(Ingredients2, images2) {
   const { user } = useSelector((state) => state.user);
+  const { loading, Setloading } = useState(false);
   const userData = useActionData();
   useEffect(() => {
     if (userData) {
+      const addTodo = async () => {
+        Setloading(true);
+      };
       const newRecipe = {
         title: userData.title,
         images: images2,

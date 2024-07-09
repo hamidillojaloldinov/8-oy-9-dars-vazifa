@@ -2,11 +2,16 @@
 import toast from "react-hot-toast";
 import { auth } from "../firebase/firebaseConfig";
 import { signOut } from "firebase/auth";
+import { FaHome } from "react-icons/fa";
+import { IoStatsChart } from "react-icons/io5";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { AbdateTheme, logout } from "../app/userslice";
 import Weather from "./Weather";
 import { Link } from "react-router-dom";
+import { IoMdCreate } from "react-icons/io";
+import { MdOutlineTrackChanges } from "react-icons/md";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -26,11 +31,13 @@ function Navbar() {
   return (
     <div className="navbar bg-base-100  max-w-6xl mx-auto border-b-2">
       <div className="flex-1 navbar-start">
-        <Link to="/" className="btn btn-ghost text-xl m-0">
-          M<span className="text-sm -mr-2 -ml-2 ">YKITCHE</span>N
-        </Link>
+        <div className="tooltip tooltip-bottom" data-tip="Home">
+          <Link to="/" className="btn btn-ghost text-xl m-0 ">
+            M<span className="text-sm -mr-2 -ml-2 ">YKITCHE</span>N
+          </Link>
+        </div>
       </div>
-      <div className="navbar-center px-5">
+      <div className="mr-40">
         <Weather />
       </div>
       <div className="flex-none">
@@ -56,33 +63,7 @@ function Navbar() {
             <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z" />
           </svg>
         </label>
-        <Link to="/cart">
-          <div className="dropdown dropdown-end mr-5">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
-              <div className="indicator">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <span className="badge badge-sm indicator-item">{amount}</span>
-              </div>
-            </div>
-          </div>
-        </Link>
+
         <div className="mr-5 text-lg sm:flex hidden">
           {user ? user.displayName : "not name"}
         </div>
@@ -105,24 +86,68 @@ function Navbar() {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[2] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[2] mt-3 w-52 shadow"
           >
             <li>
-              <Link to="/" className="justify-between">
+              <Link to="/">
+                <FaHome />
                 Home
               </Link>
             </li>
             <li>
-              <Link to="/add_New_Resipet">Create resipe</Link>
+              <Link to="/add_New_Resipet">
+                {" "}
+                <IoMdCreate />
+                Create resipe
+              </Link>
             </li>
             <li>
-              <Link to="/themes">Change theme</Link>
+              <Link to="/themes">
+                {" "}
+                <MdOutlineTrackChanges />
+                Change theme
+              </Link>
             </li>
             <li>
-              <Link to="/charts">Chart</Link>
+              <Link to="/charts">
+                {" "}
+                <IoStatsChart />
+                Chart
+              </Link>
             </li>
             <li>
-              <button onClick={logOutProfile}>Logout</button>
+              <Link to="/cart">
+                <div className="">
+                  <div tabIndex={0} role="button">
+                    <div className="indicator">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                        />
+                      </svg>
+                      <span className="badge badge-sm indicator-item">
+                        {amount}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                basket
+              </Link>
+            </li>
+            <li>
+              <button onClick={logOutProfile}>
+                <RiLogoutCircleRLine />
+                Logout
+              </button>
             </li>
           </ul>
         </div>
