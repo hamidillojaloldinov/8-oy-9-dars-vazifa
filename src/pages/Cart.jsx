@@ -31,9 +31,9 @@ function Cart() {
     );
   } else {
     return (
-      <div className="mx-48 mt-10">
+      <div className="md:mx-48 mx-10 mt-10">
         <h1 className="text-4xl ">Shopping Cart</h1>
-        <div className="grid sm:grid-cols-2 grid-cols-1">
+        <div className="grid md:grid-cols-2 grid-cols-1">
           <div className="overflow-x-auto">
             <table className="table">
               <thead>
@@ -58,7 +58,6 @@ function Cart() {
                               />
                             </div>
                           </div>
-                          <div></div>
                         </div>
                       </td>
                       <td>
@@ -116,7 +115,7 @@ function Cart() {
               </tbody>
             </table>
           </div>
-          <div className="sm:w-96 w-70 sm:ml-40 ml-0">
+          <div className="md:w-96 w-70 md:ml-40 ml-0">
             <h3 className="text-xl">Order Summary</h3>
             <div className="bg-teal-100 rounded-md gap-10 text-center py-2">
               <input

@@ -1,6 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Themes() {
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "winter"
+  );
+
+  const handleToggle = (e) => {
+    setTheme((prevTheme) => (e));
+  };
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]);
   const themes = [
     "default",
     "dark",
@@ -42,6 +54,7 @@ function Themes() {
     const attribute = "data-theme";
     root.setAttribute(attribute, theme);
     setCurrentTheme(() => theme);
+    handleToggle(theme)
   }
   return (
     <div className="pt-20 px-20">

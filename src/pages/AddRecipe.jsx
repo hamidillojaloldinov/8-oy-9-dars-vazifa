@@ -25,6 +25,8 @@ function AddRecipe() {
   const [Ingredients, setIngredients] = useState("");
   const [title, setTitle] = useState("");
   const [time, setTime] = useState("");
+  const [ingredientError, setIngredientError] = useState("");
+  const [imageError, setImageError] = useState("");
   const navigate = useNavigate();
   const [nation, setNation] = useState("Uzbek");
   const [method, setMethod] = useState("");
@@ -76,6 +78,29 @@ function AddRecipe() {
       nation: nation,
     };
     setdata2(data);
+  };
+  const handleAddIngredient = () => {
+    if (Ingredients) {
+      if (Ingredients2.includes(Ingredients)) {
+        setIngredientError("Ingredient already exists in the list.");
+      } else {
+        setIngredients2((prevList) => [...prevList, Ingredients]);
+        setIngredients("");
+        setIngredientError("");
+      }
+    }
+  };
+
+  const handleAddImage = () => {
+    if (images) {
+      if (images2.includes(images)) {
+        setImageError("Image already exists in the list.");
+      } else {
+        setImages2((prevList) => [...prevList, images]);
+        setImages("");
+        setImageError("");
+      }
+    }
   };
   return (
     <div className="flex justify-center h-[830px] mb-14">
@@ -138,11 +163,12 @@ function AddRecipe() {
                 type="button"
                 className="btn btn-accent  rounded-xl w-20"
                 value="+"
-                onClick={() => {
-                  Ingredients2.push(Ingredients), setIngredients("");
-                }}
+                onClick={handleAddIngredient}
               />
             </div>
+            {ingredientError && (
+              <p className="text-red-500">{ingredientError}</p>
+            )}
             <h3 className="flex items-center gap-2">
               Ingredients:
               <span className=" flex text-sm">
@@ -151,7 +177,7 @@ function AddRecipe() {
                     No Ingredients yet
                   </h2>
                 ) : (
-                  <ul className="flex items-center gap-2">
+                  <ul className="grid grid-cols-6 items-center gap-2">
                     {Ingredients2.map((Ingredient) => {
                       return (
                         <li
@@ -182,13 +208,12 @@ function AddRecipe() {
               />
               <input
                 className="btn btn-accent rounded-xl w-20"
-                onClick={() => {
-                  images2.push(images), setImages("");
-                }}
+                onClick={handleAddImage}
                 type="button"
                 value="+"
               />
             </div>
+            {imageError && <p className="text-red-500">{imageError}</p>}
             <h3 className="flex items-center gap-2">
               Images:
               <span className=" flex text-sm">
@@ -197,7 +222,7 @@ function AddRecipe() {
                     No images yet
                   </h2>
                 ) : (
-                  <ul className="flex items-center gap-2">
+                  <ul className="grid grid-cols-4 items-center gap-2">
                     {images2.map((img) => {
                       return (
                         <li key={img} className="relative flex items-center">
@@ -255,9 +280,9 @@ function AddRecipe() {
           </div>
           <label className="grid grid-cols-2 gap-5 mt-2">
             {Ingredients2.length >= 3 && images2.length >= 3 ? (
-                <button className="btn btn-accent" disabled={loading}>
-                  {loading ? "Adding..." : "Add"}
-                </button>
+              <button className="btn btn-accent" disabled={loading}>
+                {loading ? "Adding..." : "Add"}
+              </button>
             ) : (
               <input
                 className="btn btn-accent"

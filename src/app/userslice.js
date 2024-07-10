@@ -5,8 +5,7 @@ function dataFromLocalStorage() {
     JSON.parse(localStorage.getItem("user")) || {
       isAuthState: false,
       calculator: { products: [], price: 0, amount: 0 },
-      user: null,
-      Them: "light",
+      user: null
     }
   );
 }
@@ -46,9 +45,6 @@ const userSlice = createSlice({
       }
       userSlice.caseReducers.calculateTotal(state);
     },
-    AbdateTheme: (state, { payload }) => {
-      state.Them = payload;
-    },
     removeAll: (state, { payload }) => {
       state.calculator = { products: [], amount: 0, price: 0 };
     },
@@ -63,8 +59,8 @@ const userSlice = createSlice({
       let amount = 0;
 
       state.calculator.products.forEach((item) => {
-        console.log(item);
-        price += item.prise;
+        let AllPrices = item.prise * item.amount;
+        price += AllPrices;
         amount += item.amount;
       });
 
@@ -83,7 +79,6 @@ export const {
   changeAmount,
   removeProduct,
   calculateTotal,
-  removeAll,
-  AbdateTheme,
+  removeAll
 } = userSlice.actions;
 export default userSlice.reducer;

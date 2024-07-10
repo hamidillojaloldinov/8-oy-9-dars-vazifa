@@ -23,7 +23,6 @@ function useRegister() {
   const [isPending, setIsPending] = useState(false);
 
   const register = async (email, password, displayName, photoURL) => {
-    console.log(photoURL);
     setIsPending(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(

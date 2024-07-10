@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useSelector } from "react-redux";
 import { useCollection } from "../hooks/useCollection";
+import { Link } from "react-router-dom";
 
 function Charts() {
   const { user } = useSelector((state) => state.user);
@@ -148,34 +149,51 @@ function Charts() {
   return (
     <div className="place-content-center flex text-center content-center mb-10">
       {data ? (
-        <div>
-          <div className="mb-20 mt-10">
-            <h1 className="text-2xl mb-2">Nation</h1>
-            <div id="chart">
-              <ReactApexChart
-                className="flex justify-center place-content-center"
-                options={PieChart.options}
-                series={PieChart.series}
-                type="pie"
-                width={600}
-              />
+        data?.length != 0 ? (
+          <div>
+            <div className="mb-20 mt-10">
+              <h1 className="text-2xl mb-2">Nation</h1>
+              <div id="chart">
+                <ReactApexChart
+                  className="flex justify-center place-content-center"
+                  options={PieChart.options}
+                  series={PieChart.series}
+                  type="pie"
+                  width={600}
+                />
+              </div>
+              <div id="html-dist"></div>
             </div>
-            <div id="html-dist"></div>
+            <div className="">
+              <h1 className="text-2xl mb-2">Time</h1>
+              <div id="chart">
+                <ReactApexChart
+                  options={ColumnCharts.options}
+                  series={ColumnCharts.series}
+                  type="bar"
+                  height={350}
+                  width={1300}
+                />
+              </div>
+              <div id="html-dist"></div>
+            </div>
           </div>
-          <div className="">
-            <h1 className="text-2xl mb-2">Time</h1>
-            <div id="chart">
-              <ReactApexChart
-                options={ColumnCharts.options}
-                series={ColumnCharts.series}
-                type="bar"
-                height={350}
-                width={1300}
-              />
-            </div>
-            <div id="html-dist"></div>
+        ) : (
+          <div className="m-auto flex justify-center items-center h-[500px] max-w-[1220px]">
+          <div className="flex flex-col text-center justify-center items-center">
+            <img src="" alt="" />
+            <h1 className="font-semibold text-[34px]">
+            You have no recipes :{`(`}
+            </h1>
+            
+            <Link to="/">
+              <button className="mt-[50px] text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 hover:text-white duration-300 font-bold w-[250px] h-[61px] bg-[#8A33FD] rounded-[8px]">
+                Home
+              </button>
+            </Link>
           </div>
         </div>
+        )
       ) : (
         <span className="loading loading-ring w-20 my-60"></span>
       )}

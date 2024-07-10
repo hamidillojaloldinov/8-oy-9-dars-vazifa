@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Link, useActionData } from "react-router-dom";
 import { FormInput } from "../components";
 import useRegister from "../hooks/useRegister";
@@ -14,16 +14,80 @@ export const action = async ({ request }) => {
 
 function Register() {
   const userData = useActionData();
-
+  const [erorInput, setErrorInput] = useState({
+    email: "",
+    password: "",
+    displayName: "",
+    photoURL: "",
+  });
   const { register, isPending, registerWithGoogle } = useRegister();
   useEffect(() => {
     if (userData) {
-      register(
-        userData.email,
-        userData.password,
-        userData.displayName,
-        userData.photoURL
-      );
+      if (
+        userData.displayName &&
+        userData.photoURL &&
+        userData.email &&
+        userData.password
+      ) {
+        register(
+          userData.email,
+          userData.password,
+          userData.displayName,
+          userData.photoURL
+        );
+      } else {
+        if (
+          userData.displayName ||
+          userData.photoURL ||
+          userData.email ||
+          userData.password
+        ) {
+          if (!userData.password) {
+            let name = {
+              email: "",
+              password: "input-error",
+              displayName: "",
+              photoURL: "",
+            };
+            setErrorInput(name);
+          }
+          if (!userData.photoURL) {
+            let name = {
+              email: "",
+              password: "",
+              displayName: "",
+              photoURL: "input-error",
+            };
+            setErrorInput(name);
+          }
+          if (!userData.email) {
+            let name = {
+              email: "input-error",
+              password: "",
+              displayName: "",
+              photoURL: "",
+            };
+            setErrorInput(name);
+          }
+          if (!userData.displayName) {
+            let name = {
+              email: "",
+              password: "",
+              displayName: "input-error",
+              photoURL: "",
+            };
+            setErrorInput(name);
+          }
+        } else {
+          let name = {
+            email: "input-error",
+            password: "input-error",
+            displayName: "input-error",
+            photoURL: "input-error",
+          };
+          setErrorInput(name);
+        }
+      }
     }
   }, [userData]);
 
@@ -45,11 +109,31 @@ function Register() {
               className="flex flex-col items-center gap-5"
               action=""
             >
-              <h1 className="text-3x1 font-semibold">Signup</h1>
-              <FormInput type="text" label="displayName" name="displayName" />
-              <FormInput type="url" label="photoURL" name="photoURL" />
-              <FormInput type="email" label="email" name="email" />
-              <FormInput type="password" label="password" name="password" />
+              <h1 className="text-3xl font-semibold">Signup</h1>
+              <FormInput
+                type="text"
+                label="displayName"
+                name="displayName"
+                status={erorInput.displayName}
+              />
+              <FormInput
+                type="url"
+                label="photoURL"
+                name="photoURL"
+                status={erorInput.photoURL}
+              />
+              <FormInput
+                type="email"
+                label="email"
+                name="email"
+                status={erorInput.email}
+              />
+              <FormInput
+                type="password"
+                label="password"
+                name="password"
+                status={erorInput.password}
+              />
               <div className="w-full">
                 {!isPending && (
                   <button className="btn btn-primary btn-block">Signup</button>

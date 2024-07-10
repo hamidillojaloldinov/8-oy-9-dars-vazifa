@@ -6,12 +6,13 @@ import { FaHome } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 // redux
 import { useDispatch, useSelector } from "react-redux";
-import { AbdateTheme, logout } from "../app/userslice";
+import { logout } from "../app/userslice";
 import Weather from "./Weather";
 import { Link } from "react-router-dom";
 import { IoMdCreate } from "react-icons/io";
 import { MdOutlineTrackChanges } from "react-icons/md";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { useEffect, useState } from "react";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -28,25 +29,38 @@ function Navbar() {
       toast.error(error.message);
     }
   };
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
+
+  const handleToggle = (e) => {
+    setTheme((prevTheme) => e);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]);
+
   return (
     <div className="navbar bg-base-100  max-w-6xl mx-auto border-b-2">
       <div className="flex-1 navbar-start">
         <div className="tooltip tooltip-bottom" data-tip="Home">
           <Link to="/" className="btn btn-ghost text-xl m-0 ">
-            M<span className="text-sm -mr-2 -ml-2 ">YKITCHE</span>N
+            M<span className=" -mr-2 -ml-2 ">Y KITCHE</span>N
           </Link>
         </div>
       </div>
       <div className="navbar-center">
         <Weather />
       </div>
-      <div className="flex-none">
-        <label className="swap swap-rotate pr-10">
+      <div className="flex-none items-center">
+        <label className="swap swap-rotate pr-10" data-tip="dark">
           <input
             type="checkbox"
             className="theme-controller"
-            onClick={() => dispatch(AbdateTheme("dark"))}
-            value="dark"
+            onClick={() => handleToggle("dark")}
+            value="light"
           />
           <svg
             className="swap-off h-10 w-10 fill-current"
@@ -96,21 +110,18 @@ function Navbar() {
             </li>
             <li>
               <Link to="/add_New_Resipet">
-                {" "}
                 <IoMdCreate />
                 Create resipe
               </Link>
             </li>
             <li>
               <Link to="/themes">
-                {" "}
                 <MdOutlineTrackChanges />
                 Change theme
               </Link>
             </li>
             <li>
               <Link to="/charts">
-                {" "}
                 <IoStatsChart />
                 Chart
               </Link>

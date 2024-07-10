@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Footer, Navbar } from "../components";
-import { useSelector } from "react-redux";
 
 function MainLayout() {
   return (
@@ -13,7 +12,7 @@ function MainLayout() {
         <Outlet />
       </main>
       <footer>
-        <Footer lassName="relative"/>
+        <Footer lassName="relative" />
       </footer>
     </div>
   );

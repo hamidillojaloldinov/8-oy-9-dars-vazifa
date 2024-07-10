@@ -9,7 +9,6 @@ function ProductId() {
   const { user } = useSelector((state) => state.user);
   const { data } = useCollection("Recipes", ["uid", "==", user.uid]);
   const data2 = data?.filter((id) => id.id == params.id)[0];
-  console.log(data2);
   const dispatch = useDispatch();
 
   const [productAmount, setProductAmount] = useState(1);
@@ -31,7 +30,7 @@ function ProductId() {
   };
   return (
     <>
-      <main className="my-container grow">
+      <main className="mb-10 container grow">
         <div className="mx-auto md:w-[700px] lg:w-[1300px] sm:w-[400px]">
           <div className="py-10">
             <h2 className="mb-5 text-2xl font-semibold">Recipe elements</h2>
@@ -83,7 +82,9 @@ function ProductId() {
                 </div>
                 <div className="flex gap-5 items-start">
                   <h3 className="mb-2 text-xl font-semibold">Method:</h3>
-                  <p className="mb-5">{data2?.Method}</p>
+                  <p className="mb-5 text-balance md:w-[700px] lg:w-[1300px] sm:w-[400px]">
+                    {data2?.Method}
+                  </p>
                 </div>
                 <div className="sm:flex bleck items-center w-full justify-between">
                   <div className="flex items-center gap-2 sm:mb-0 mb-10">

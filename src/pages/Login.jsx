@@ -1,7 +1,7 @@
 import { Form, Link, useActionData } from "react-router-dom";
 import { FormInput } from "../components";
 import useLogin from "../hooks/useLogin";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useRegister from "../hooks/useRegister";
 
 export const action = async ({ request }) => {
@@ -16,9 +16,45 @@ function Login() {
 
   const { loginUser, isPending } = useLogin();
   const { isPending: isPendingUseRegister, registerWithGoogle } = useRegister();
+  const [erorInput, setErrorInput] = useState({
+    email: "",
+    password: "",
+  });
   useEffect(() => {
     if (userData) {
-      loginUser(userData.email, userData.password);
+      if (userData.email && userData.password) {
+        loginUser(userData.email, userData.password);
+      } else {
+        if (userData.email || userData.password) {
+          if (!userData.password) {
+            let name = {
+              email: "",
+              password: "input-error",
+            };
+            setErrorInput(name);
+          }
+          if (!userData.email) {
+            let name = {
+              email: "input-error",
+              password: "",
+            };
+            setErrorInput(name);
+          }
+          if (!userData.email) {
+            let name = {
+              email: "input-error",
+              password: "",
+            };
+            setErrorInput(name);
+          }
+        } else {
+          let name = {
+            email: "input-error",
+            password: "input-error",
+          };
+          setErrorInput(name);
+        }
+      }
     }
   }, [userData]);
 
@@ -35,9 +71,19 @@ function Login() {
       <div className="h-full justify-center bg-slate-500 grid place-items-center bg-[url('./olovli.mp4')]">
         <div className="card bg-base-100 sm:w-96 w-50 shadow-x1 p-8">
           <Form method="post" className="flex flex-col items-center gap-5">
-            <h1 className="text-3x1 font-semibold">Login</h1>
-            <FormInput type="email" label="email" name="email" />
-            <FormInput type="password" label="password" name="password" />
+            <h1 className="text-3xl font-semibold">Login</h1>
+            <FormInput
+              type="email"
+              label="email"
+              name="email"
+              status={erorInput.email}
+            />
+            <FormInput
+              type="password"
+              label="password"
+              name="password"
+              status={erorInput.password}
+            />
             <div className="w-full">
               {!isPending && (
                 <button className="btn btn-primary btn-block">Login</button>
